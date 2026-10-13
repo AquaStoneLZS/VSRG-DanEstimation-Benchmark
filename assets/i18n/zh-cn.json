@@ -160,6 +160,8 @@
         "noData": "尚未加载数据。",
         "meta": "显示 {shownValid} / {shownTotal} | 当前范围总数={scopeTotal} | 错误数={errorCount}",
         "empty": "当前筛选条件下无匹配谱面。",
+        "lazyLoadAll": "已加载全部 {total} 张谱面",
+        "lazyLoadMore": "向下滚动加载更多 ({rendered} / {total})...",
         "columns": {
           "name": "名称",
           "expected": "期望",

@@ -160,6 +160,8 @@
         "noData": "No Data Loaded.",
         "meta": "{shownValid} / {shownTotal} Valid Maps Shown | Total In Scope={scopeTotal} | Errors={errorCount}",
         "empty": "No maps match the current filter.",
+        "lazyLoadAll": "All {total} maps loaded",
+        "lazyLoadMore": "Scroll down to load more ({rendered} / {total})...",
         "columns": {
           "name": "Name",
           "expected": "Expected",

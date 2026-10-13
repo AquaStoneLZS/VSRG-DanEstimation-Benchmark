@@ -398,17 +398,91 @@ function bindEvents() {
         });
     }
 
-    dom.searchInput.addEventListener("input", applyFiltersAndRender);
-    dom.patternFilter.addEventListener("change", applyFiltersAndRender);
-    dom.subPatternFilter.addEventListener("change", applyFiltersAndRender);
-    dom.bandFilter.addEventListener("change", applyFiltersAndRender);
-    dom.expectedMinFilter.addEventListener("input", applyFiltersAndRender);
-    dom.expectedMaxFilter.addEventListener("input", applyFiltersAndRender);
-    dom.deltaMinFilter.addEventListener("input", applyFiltersAndRender);
-    dom.deltaMaxFilter.addEventListener("input", applyFiltersAndRender);
+    const debounce = (fn, delayMs = 280) => {
+        let timer = null;
+        const debounced = (...args) => {
+            if (timer !== null) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                timer = null;
+                fn(...args);
+            }, delayMs);
+        };
+        debounced.cancel = () => {
+            if (timer !== null) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        };
+        debounced.flush = (...args) => {
+            if (timer !== null) {
+                clearTimeout(timer);
+                timer = null;
+                fn(...args);
+            }
+        };
+        return debounced;
+    };
+
+    const debouncedFilter = debounce(applyFiltersAndRender, 280);
+
+    const onSearchInputChange = () => {
+        const searchClearButton = document.getElementById("searchClearButton");
+        if (searchClearButton) {
+            searchClearButton.hidden = !dom.searchInput.value;
+        }
+        debouncedFilter();
+    };
+
+    dom.searchInput.addEventListener("input", onSearchInputChange);
+    dom.expectedMinFilter.addEventListener("input", debouncedFilter);
+    dom.expectedMaxFilter.addEventListener("input", debouncedFilter);
+    dom.deltaMinFilter.addEventListener("input", debouncedFilter);
+    dom.deltaMaxFilter.addEventListener("input", debouncedFilter);
+
+    const handleEnterFlush = (event) => {
+        if (event.key === "Enter") {
+            debouncedFilter.flush();
+        }
+    };
+    dom.searchInput.addEventListener("keydown", handleEnterFlush);
+    dom.expectedMinFilter.addEventListener("keydown", handleEnterFlush);
+    dom.expectedMaxFilter.addEventListener("keydown", handleEnterFlush);
+    dom.deltaMinFilter.addEventListener("keydown", handleEnterFlush);
+    dom.deltaMaxFilter.addEventListener("keydown", handleEnterFlush);
+
+    const searchClearButton = document.getElementById("searchClearButton");
+    if (searchClearButton) {
+        searchClearButton.addEventListener("click", () => {
+            dom.searchInput.value = "";
+            searchClearButton.hidden = true;
+            debouncedFilter.cancel();
+            applyFiltersAndRender();
+            dom.searchInput.focus();
+        });
+    }
+
+    dom.patternFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
+    dom.subPatternFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
+    dom.bandFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
 
     dom.clearFilterButton.addEventListener("click", () => {
+        debouncedFilter.cancel();
         dom.searchInput.value = "";
+        const clearBtn = document.getElementById("searchClearButton");
+        if (clearBtn) {
+            clearBtn.hidden = true;
+        }
         dom.patternFilter.value = "all";
         dom.subPatternFilter.value = "all";
         dom.bandFilter.value = "all";

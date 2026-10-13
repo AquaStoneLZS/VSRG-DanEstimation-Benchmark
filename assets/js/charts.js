@@ -7,10 +7,10 @@ import {
 } from "./chartRenderers.js";
 
 const BAND_COLORS = {
-    exact: "#5ee8bd",
-    close: "#7ad1ff",
-    moderate: "#f9bb5d",
-    miss: "#ff6f7d",
+    exact: "#10b981",
+    close: "#38bdf8",
+    moderate: "#f59e0b",
+    miss: "#f43f5e",
 };
 
 const diagonalPlugin = {
@@ -75,9 +75,9 @@ export class BenchmarkCharts {
     }
 
     applyGlobalDefaults() {
-        this.ChartRef.defaults.color = "#9fb0da";
-        this.ChartRef.defaults.borderColor = "rgba(153, 180, 255, 0.18)";
-        this.ChartRef.defaults.font.family = "Outfit, Segoe UI, sans-serif";
+        this.ChartRef.defaults.color = "#94a3b8";
+        this.ChartRef.defaults.borderColor = "rgba(148, 175, 240, 0.12)";
+        this.ChartRef.defaults.font.family = "OutfitLocal, SpaceGroteskLocal, Segoe UI, sans-serif";
         this.ChartRef.defaults.font.size = 12;
         this.ChartRef.defaults.maintainAspectRatio = false;
     }
