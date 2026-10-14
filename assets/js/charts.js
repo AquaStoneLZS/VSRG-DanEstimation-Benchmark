@@ -7,10 +7,10 @@ import {
 } from "./chartRenderers.js";
 
 const BAND_COLORS = {
-    exact: "#5ee8bd",
-    close: "#7ad1ff",
-    moderate: "#f9bb5d",
-    miss: "#ff6f7d",
+    exact: "#10b981",
+    close: "#38bdf8",
+    moderate: "#f59e0b",
+    miss: "#f43f5e",
 };
 
 const diagonalPlugin = {
@@ -75,9 +75,9 @@ export class BenchmarkCharts {
     }
 
     applyGlobalDefaults() {
-        this.ChartRef.defaults.color = "#9fb0da";
-        this.ChartRef.defaults.borderColor = "rgba(153, 180, 255, 0.18)";
-        this.ChartRef.defaults.font.family = "Outfit, Segoe UI, sans-serif";
+        this.ChartRef.defaults.color = "#94a3b8";
+        this.ChartRef.defaults.borderColor = "rgba(148, 175, 240, 0.12)";
+        this.ChartRef.defaults.font.family = "OutfitLocal, SpaceGroteskLocal, Segoe UI, sans-serif";
         this.ChartRef.defaults.font.size = 12;
         this.ChartRef.defaults.maintainAspectRatio = false;
     }
@@ -206,12 +206,25 @@ export class BenchmarkCharts {
             pointHoverRadius: 6,
         }));
 
+        let tooltipTotalOverlapped = 0;
+
         const chart = new this.ChartRef(this.getCanvas(this.canvasIds.scatter), {
             type: "scatter",
             data: {
                 datasets,
             },
             options: {
+                onClick: (_event, elements) => {
+                    if (!elements?.length || !this.interactionHandlers?.onScatterSelect) {
+                        return;
+                    }
+                    const element = elements[0];
+                    const dataset = datasets[element.datasetIndex];
+                    const point = dataset?.data?.[element.index];
+                    if (point?.row) {
+                        this.interactionHandlers.onScatterSelect(point.row.expected, point.row);
+                    }
+                },
                 plugins: {
                     benchmarkDiagonalReference: {
                         enabled: true,
@@ -222,27 +235,28 @@ export class BenchmarkCharts {
                         },
                     },
                     tooltip: {
+                        filter: (_item, index, allItems) => {
+                            tooltipTotalOverlapped = allItems.length;
+                            return index < 7;
+                        },
                         callbacks: {
                             title: (items) => {
-                                const names = [...new Set(
-                                    (items || [])
-                                        .map((item) => item?.raw?.row?.name)
-                                        .filter((name) => Boolean(name)),
-                                )];
-
-                                if (!names.length) {
-                                    return t("common.unknown", "Unknown");
+                                if (tooltipTotalOverlapped > 1) {
+                                    return t("index.charts.scatter.overlappedTitle", "{count} maps overlapped", { count: tooltipTotalOverlapped });
                                 }
-
-                                if (names.length === 1) {
-                                    return names[0];
-                                }
-
-                                return `${names.length} maps overlapped`;
+                                const name = items?.[0]?.raw?.row?.name;
+                                return name || t("common.unknown", "Unknown");
                             },
                             label: (item) => {
                                 const row = item.raw.row;
-                                return `${row.name} | expected ${row.expected.toFixed(2)} | got ${row.got.toFixed(2)} | delta ${row.delta.toFixed(2)} | pattern ${row.pattern || "-"}`;
+                                return `${row.name} | exp ${row.expected.toFixed(2)} | got ${row.got.toFixed(2)} | delta ${row.delta.toFixed(2)} | ${row.pattern || "-"}`;
+                            },
+                            footer: () => {
+                                if (tooltipTotalOverlapped > 7) {
+                                    const extraCount = tooltipTotalOverlapped - 7;
+                                    return t("index.charts.scatter.moreOverlapped", "... and {count} more maps (click point to view all in table)", { count: extraCount });
+                                }
+                                return "";
                             },
                         },
                     },
