@@ -147,6 +147,9 @@ function applyEmptyDashboard() {
         activeFilters: getActiveFilters(dom),
         fullSummary: emptySummary,
     });
+    document.querySelectorAll(".band-card").forEach((card) => {
+        card.classList.remove("is-active");
+    });
     dom.tableMeta.textContent = t("index.table.noData", "No Data Loaded.");
 }
 
@@ -201,6 +204,12 @@ function applyFiltersAndRender() {
             errorCount: state.errorRows.length,
         },
     );
+
+    const activeBand = dom.bandFilter ? dom.bandFilter.value : "all";
+    document.querySelectorAll(".band-card").forEach((card) => {
+        const bandType = ["exact", "close", "moderate", "miss"].find((type) => card.classList.contains(type));
+        card.classList.toggle("is-active", bandType === activeBand);
+    });
 
     if (state.currentAlgorithm) {
         setReadyDatasetInfo(activeSummary, state.errorRows.length);
@@ -318,6 +327,30 @@ function bindEvents() {
         onSubPatternSelect: (subPatternName) => {
             toggleSelectFilter(dom.subPatternFilter, subPatternName);
         },
+        onScatterSelect: (expectedValue) => {
+            if (expectedValue === undefined || expectedValue === null) {
+                return;
+            }
+            const valStr = String(expectedValue);
+            if (dom.expectedMinFilter.value === valStr && dom.expectedMaxFilter.value === valStr) {
+                dom.expectedMinFilter.value = "";
+                dom.expectedMaxFilter.value = "";
+            } else {
+                dom.expectedMinFilter.value = valStr;
+                dom.expectedMaxFilter.value = valStr;
+                dom.resultTable?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            applyFiltersAndRender();
+        },
+    });
+
+    document.querySelectorAll(".band-card").forEach((card) => {
+        const bandType = ["exact", "close", "moderate", "miss"].find((type) => card.classList.contains(type));
+        if (bandType) {
+            card.addEventListener("click", () => {
+                toggleSelectFilter(dom.bandFilter, bandType);
+            });
+        }
     });
 
     dom.algorithmSelect.addEventListener("change", async () => {
@@ -398,17 +431,91 @@ function bindEvents() {
         });
     }
 
-    dom.searchInput.addEventListener("input", applyFiltersAndRender);
-    dom.patternFilter.addEventListener("change", applyFiltersAndRender);
-    dom.subPatternFilter.addEventListener("change", applyFiltersAndRender);
-    dom.bandFilter.addEventListener("change", applyFiltersAndRender);
-    dom.expectedMinFilter.addEventListener("input", applyFiltersAndRender);
-    dom.expectedMaxFilter.addEventListener("input", applyFiltersAndRender);
-    dom.deltaMinFilter.addEventListener("input", applyFiltersAndRender);
-    dom.deltaMaxFilter.addEventListener("input", applyFiltersAndRender);
+    const debounce = (fn, delayMs = 280) => {
+        let timer = null;
+        const debounced = (...args) => {
+            if (timer !== null) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                timer = null;
+                fn(...args);
+            }, delayMs);
+        };
+        debounced.cancel = () => {
+            if (timer !== null) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        };
+        debounced.flush = (...args) => {
+            if (timer !== null) {
+                clearTimeout(timer);
+                timer = null;
+                fn(...args);
+            }
+        };
+        return debounced;
+    };
+
+    const debouncedFilter = debounce(applyFiltersAndRender, 280);
+
+    const onSearchInputChange = () => {
+        const searchClearButton = document.getElementById("searchClearButton");
+        if (searchClearButton) {
+            searchClearButton.hidden = !dom.searchInput.value;
+        }
+        debouncedFilter();
+    };
+
+    dom.searchInput.addEventListener("input", onSearchInputChange);
+    dom.expectedMinFilter.addEventListener("input", debouncedFilter);
+    dom.expectedMaxFilter.addEventListener("input", debouncedFilter);
+    dom.deltaMinFilter.addEventListener("input", debouncedFilter);
+    dom.deltaMaxFilter.addEventListener("input", debouncedFilter);
+
+    const handleEnterFlush = (event) => {
+        if (event.key === "Enter") {
+            debouncedFilter.flush();
+        }
+    };
+    dom.searchInput.addEventListener("keydown", handleEnterFlush);
+    dom.expectedMinFilter.addEventListener("keydown", handleEnterFlush);
+    dom.expectedMaxFilter.addEventListener("keydown", handleEnterFlush);
+    dom.deltaMinFilter.addEventListener("keydown", handleEnterFlush);
+    dom.deltaMaxFilter.addEventListener("keydown", handleEnterFlush);
+
+    const searchClearButton = document.getElementById("searchClearButton");
+    if (searchClearButton) {
+        searchClearButton.addEventListener("click", () => {
+            dom.searchInput.value = "";
+            searchClearButton.hidden = true;
+            debouncedFilter.cancel();
+            applyFiltersAndRender();
+            dom.searchInput.focus();
+        });
+    }
+
+    dom.patternFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
+    dom.subPatternFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
+    dom.bandFilter.addEventListener("change", () => {
+        debouncedFilter.cancel();
+        applyFiltersAndRender();
+    });
 
     dom.clearFilterButton.addEventListener("click", () => {
+        debouncedFilter.cancel();
         dom.searchInput.value = "";
+        const clearBtn = document.getElementById("searchClearButton");
+        if (clearBtn) {
+            clearBtn.hidden = true;
+        }
         dom.patternFilter.value = "all";
         dom.subPatternFilter.value = "all";
         dom.bandFilter.value = "all";

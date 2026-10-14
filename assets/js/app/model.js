@@ -258,17 +258,17 @@ function matchesFilters(row, filters) {
         return false;
     }
 
-    if (filters.expectedMin != null && row.expected < filters.expectedMin) {
+    if (filters.expectedMin != null && row.expected < (filters.expectedMin - 0.001)) {
         return false;
     }
-    if (filters.expectedMax != null && row.expected > filters.expectedMax) {
+    if (filters.expectedMax != null && row.expected > (filters.expectedMax + 0.001)) {
         return false;
     }
 
-    if (filters.deltaMin != null && row.deltaAbs < filters.deltaMin) {
+    if (filters.deltaMin != null && row.deltaAbs < (filters.deltaMin - 0.001)) {
         return false;
     }
-    if (filters.deltaMax != null && row.deltaAbs > filters.deltaMax) {
+    if (filters.deltaMax != null && row.deltaAbs > (filters.deltaMax + 0.001)) {
         return false;
     }
 

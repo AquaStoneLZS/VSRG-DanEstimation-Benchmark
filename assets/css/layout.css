@@ -1,10 +1,10 @@
 .page {
     position: relative;
     z-index: 1;
-    width: min(1320px, 95vw);
-    margin: 22px auto 36px;
+    width: min(1360px, 94vw);
+    margin: 18px auto 48px;
     display: grid;
-    gap: 14px;
+    gap: 16px;
 }
 
 .page > * {
@@ -15,65 +15,81 @@
     min-width: 0;
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 42px rgba(4, 8, 18, 0.38);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.top-navbar {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .hero {
-    padding: 20px 24px 18px;
+    padding: 24px 28px 22px;
     display: grid;
-    gap: 14px;
+    gap: 18px;
 }
 
 .kpi-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
 }
 
 .band-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
 }
 
 .charts-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px;
 }
 
 .compare-panel {
-    padding: 14px;
+    padding: 18px 22px;
     display: grid;
-    gap: 10px;
+    gap: 14px;
 }
 
 .compare-kpi-grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
 }
 
 .chart-wrap.compare-chart {
-    height: 300px;
+    height: 320px;
 }
 
 .insight-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px;
 }
 
 .insight-panel {
-    padding: 14px;
+    padding: 18px 20px;
 }
 
 .chart-panel {
-    padding: 16px;
-    min-height: 280px;
+    padding: 18px 20px;
+    min-height: 290px;
 }
 
 .chart-panel.span-2 {
@@ -90,14 +106,15 @@
 }
 
 .table-panel {
-    padding: 14px;
+    padding: 18px 20px;
 }
 
 .table-wrap {
-    max-height: 540px;
+    max-height: 560px;
     overflow: auto;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--line-soft);
+    position: relative;
 }
 
 @media (max-width: 1280px) {
@@ -110,7 +127,7 @@
     }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 980px) {
     .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -136,9 +153,15 @@
     }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 680px) {
     .page {
-        width: min(1320px, 97vw);
+        width: 96vw;
+        margin: 12px auto 36px;
+        gap: 12px;
+    }
+
+    .top-navbar {
+        padding: 8px 12px;
     }
 
     .hero,
@@ -147,7 +170,7 @@
     .compare-panel,
     .error-panel,
     .insight-panel {
-        padding: 12px;
+        padding: 14px;
     }
 
     .kpi-grid,
@@ -158,6 +181,6 @@
 
     .chart-wrap,
     .chart-wrap.tall {
-        height: 260px;
+        height: 250px;
     }
 }

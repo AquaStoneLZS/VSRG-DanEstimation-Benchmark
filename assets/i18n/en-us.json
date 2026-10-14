@@ -114,7 +114,9 @@
         },
         "scatter": {
           "title": "Expected vs Got",
-          "subtitle": "Scatter with diagonal reference"
+          "subtitle": "Scatter with diagonal reference",
+          "overlappedTitle": "{count} maps overlapped",
+          "moreOverlapped": "... and {count} more maps (click point to view all in table)"
         },
         "trend": {
           "title": "Expected/Got Trend",
@@ -160,6 +162,8 @@
         "noData": "No Data Loaded.",
         "meta": "{shownValid} / {shownTotal} Valid Maps Shown | Total In Scope={scopeTotal} | Errors={errorCount}",
         "empty": "No maps match the current filter.",
+        "lazyLoadAll": "All {total} maps loaded",
+        "lazyLoadMore": "Scroll down to load more ({rendered} / {total})...",
         "columns": {
           "name": "Name",
           "expected": "Expected",

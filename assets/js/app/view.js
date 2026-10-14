@@ -34,6 +34,10 @@ export function setCompareUiVisible(visible) {
         cell.classList.toggle("hidden", !visible);
     });
 
+    if (dom.resultTable) {
+        dom.resultTable.classList.toggle("has-compare", visible);
+    }
+
     if (!visible && ["compareGot", "compareDeltaAbs", "better"].includes(state.sortKey)) {
         state.sortKey = "deltaAbs";
         state.sortDirection = "asc";
@@ -223,18 +227,26 @@ function renderInsightList(target, rows, direction) {
     }
 
     target.innerHTML = rows
-        .map((row) => {
+        .map((row, index) => {
             const sign = direction === "positive" ? "+" : "";
+            const deltaFormatted = `${sign}${formatNumber(row.delta, 2)}`;
+            const deltaBadgeClass = direction === "positive" ? "delta-underrated" : "delta-overrated";
             return [
-                "<li>",
-                `<strong>${escapeHtml(row.name)}</strong>`,
-                `<span class="muted"> (${escapeHtml(row.pattern || "-")})</span>`,
-                `<br><span class="muted">${escapeHtml(t("index.insight.detail", "delta {delta} | expected {expected} | got {got}", {
-                    delta: `${sign}${formatNumber(row.delta, 2)}`,
+                `<li class="insight-card">`,
+                `<div class="insight-card-top">`,
+                `<span class="insight-rank">#${index + 1}</span>`,
+                `<span class="insight-name" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</span>`,
+                `<span class="insight-delta ${deltaBadgeClass}">${deltaFormatted}</span>`,
+                `</div>`,
+                `<div class="insight-card-bottom">`,
+                `<span class="insight-pattern-tag">${escapeHtml(row.pattern || "-")}</span>`,
+                `<span class="insight-meta">${escapeHtml(t("index.insight.detail", "delta {delta} | expected {expected} | got {got}", {
+                    delta: deltaFormatted,
                     expected: formatNumber(row.expected, 2),
                     got: formatNumber(row.got, 2),
                 }))}</span>`,
-                "</li>",
+                `</div>`,
+                `</li>`,
             ].join("");
         })
         .join("");
@@ -341,54 +353,169 @@ export function renderErrorPanel(rows) {
         .join("");
 }
 
+const TABLE_BATCH_SIZE = 60;
+const tableLazyState = {
+    rows: [],
+    rendered: 0,
+};
+let tableObserver = null;
+
+function renderRowHtml(row) {
+    const bandKey = row._band || "error";
+    const bandLabel = bandKey === "error"
+        ? t("index.errors.errorBand", "Error")
+        : t(`band.${bandKey}`, BAND_META[bandKey]?.label || "Miss");
+    const winnerLabel = getWinnerLabel(row.better, Boolean(state.compareAlgorithm));
+    const winnerClass = row.better || "na";
+    const hasBid = hasValidBid(row);
+    const searchUrl = getMapSearchUrl(row.name);
+    const downloadUrl = hasBid ? getBeatmapDownloadUrl(row.bid) : "";
+
+    const gotValue = row.got;
+    const gotText = Number.isFinite(gotValue)
+        ? formatGotDifficultyFromNumeric(gotValue, row.pattern)
+        : (String(row.gotRaw || "").trim() || "-");
+    const gotNumericText = Number.isFinite(gotValue) ? formatNumber(gotValue) : "";
+
+    const compareGotValue = row.compareGot;
+    const compareGotText = Number.isFinite(compareGotValue)
+        ? formatNumber(compareGotValue)
+        : (String(row.compareGotRaw || "").trim() || "-");
+
+    const compareHiddenClass = state.compareAlgorithm ? "" : " hidden";
+
+    return [
+        `<tr class="band-${bandKey}${bandKey === "error" ? " map-error" : ""}">`,
+        `<td class="cell-name" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>`,
+        `<td class="num">${formatNumber(row.expected)}</td>`,
+        Number.isFinite(gotValue)
+            ? `<td class="got-cell has-hover-value"><span class="got-label">${escapeHtml(gotText)}</span><span class="got-number">${escapeHtml(gotNumericText)}</span></td>`
+            : `<td class="got-cell">${escapeHtml(gotText)}</td>`,
+        `<td class="num">${formatSigned(row.delta)}</td>`,
+        `<td class="num">${formatNumber(row.deltaAbs)}</td>`,
+        `<td>${escapeHtml(row.pattern)}</td>`,
+        `<td>${escapeHtml(row._normalizedSubPattern || normalizeSubPattern(row.subPattern))}</td>`,
+        `<td class="band"><span class="band-pill band-${bandKey}">${bandLabel}</span></td>`,
+        `<td class="compare-col${compareHiddenClass}">${escapeHtml(compareGotText)}</td>`,
+        `<td class="num compare-col${compareHiddenClass}">${formatNumber(row.compareDeltaAbs)}</td>`,
+        `<td class="winner ${winnerClass} compare-col${compareHiddenClass}">${escapeHtml(winnerLabel)}</td>`,
+        `<td class="actions-col"><div class="row-actions"><a class="icon-btn" href="${escapeHtml(searchUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t("index.table.actions.search", "Search beatmapsets"))}">🔎</a>${hasBid
+            ? `<a class="icon-btn" href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t("index.table.actions.download", "Download .osu"))}">⬇</a>`
+            : `<span class="icon-btn disabled" title="${escapeHtml(t("index.table.actions.noBid", "No bid"))}">⬇</span>`}</div></td>`,
+        "</tr>",
+    ].join("");
+}
+
+function updateLazySentinel() {
+    let sentinel = document.getElementById("tableLazySentinel");
+    if (!sentinel) {
+        sentinel = document.createElement("div");
+        sentinel.id = "tableLazySentinel";
+        sentinel.className = "table-lazy-sentinel";
+        dom.resultTable.insertAdjacentElement("afterend", sentinel);
+        sentinel.addEventListener("click", () => {
+            renderMoreTableRows();
+        });
+    }
+
+    if (tableLazyState.rows.length === 0) {
+        sentinel.hidden = true;
+        return;
+    }
+
+    sentinel.hidden = false;
+    if (tableLazyState.rendered >= tableLazyState.rows.length) {
+        sentinel.classList.remove("has-more");
+        sentinel.classList.add("all-loaded");
+        sentinel.textContent = t("index.table.lazyLoadAll", "All {total} maps loaded", {
+            total: tableLazyState.rows.length,
+        });
+    } else {
+        sentinel.classList.add("has-more");
+        sentinel.classList.remove("all-loaded");
+        sentinel.textContent = t("index.table.lazyLoadMore", "Scroll down to load more ({rendered} / {total})...", {
+            rendered: tableLazyState.rendered,
+            total: tableLazyState.rows.length,
+        });
+    }
+}
+
+export function renderMoreTableRows(batchSize = TABLE_BATCH_SIZE) {
+    if (tableLazyState.rendered >= tableLazyState.rows.length) {
+        updateLazySentinel();
+        return;
+    }
+
+    const nextBatch = tableLazyState.rows.slice(
+        tableLazyState.rendered,
+        tableLazyState.rendered + batchSize,
+    );
+    if (nextBatch.length === 0) {
+        return;
+    }
+
+    const chunkHtml = nextBatch.map(renderRowHtml).join("");
+    dom.resultTableBody.insertAdjacentHTML("beforeend", chunkHtml);
+    tableLazyState.rendered += nextBatch.length;
+    updateLazySentinel();
+}
+
+function ensureTableObserver() {
+    const tableWrap = dom.resultTable.closest(".table-wrap");
+    if (!tableWrap) {
+        return;
+    }
+
+    if (!tableWrap._lazyScrollBound) {
+        tableWrap._lazyScrollBound = true;
+        tableWrap.addEventListener("scroll", () => {
+            if (tableLazyState.rendered < tableLazyState.rows.length) {
+                if (tableWrap.scrollTop + tableWrap.clientHeight >= tableWrap.scrollHeight - 240) {
+                    renderMoreTableRows();
+                }
+            }
+        }, { passive: true });
+    }
+
+    if ("IntersectionObserver" in window && !tableObserver) {
+        tableObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting && tableLazyState.rendered < tableLazyState.rows.length) {
+                    renderMoreTableRows();
+                }
+            }
+        }, {
+            root: tableWrap,
+            rootMargin: "250px",
+            threshold: 0,
+        });
+    }
+
+    const sentinel = document.getElementById("tableLazySentinel");
+    if (tableObserver && sentinel) {
+        tableObserver.disconnect();
+        tableObserver.observe(sentinel);
+    }
+}
+
 export function renderTable(rows) {
+    tableLazyState.rows = rows;
+    tableLazyState.rendered = 0;
+    dom.resultTableBody.innerHTML = "";
     dom.emptyState.hidden = rows.length > 0;
 
-    dom.resultTableBody.innerHTML = rows
-        .map((row) => {
-            const bandKey = row._band || "error";
-            const bandLabel = bandKey === "error"
-                ? t("index.errors.errorBand", "Error")
-                : t(`band.${bandKey}`, BAND_META[bandKey]?.label || "Miss");
-            const winnerLabel = getWinnerLabel(row.better, Boolean(state.compareAlgorithm));
-            const winnerClass = row.better || "na";
-            const hasBid = hasValidBid(row);
-            const searchUrl = getMapSearchUrl(row.name);
-            const downloadUrl = hasBid ? getBeatmapDownloadUrl(row.bid) : "";
+    const tableWrap = dom.resultTable.closest(".table-wrap");
+    if (tableWrap) {
+        tableWrap.scrollTop = 0;
+    }
 
-            const gotValue = row.got;
-            const gotText = Number.isFinite(gotValue)
-                ? formatGotDifficultyFromNumeric(gotValue, row.pattern)
-                : (String(row.gotRaw || "").trim() || "-");
-            const gotNumericText = Number.isFinite(gotValue) ? formatNumber(gotValue) : "";
+    if (rows.length === 0) {
+        updateLazySentinel();
+        return;
+    }
 
-            const compareGotValue = row.compareGot;
-            const compareGotText = Number.isFinite(compareGotValue)
-                ? formatNumber(compareGotValue)
-                : (String(row.compareGotRaw || "").trim() || "-");
-
-            return [
-                `<tr class="band-${bandKey}${bandKey === "error" ? " map-error" : ""}">`,
-                `<td>${escapeHtml(row.name)}</td>`,
-                `<td class="num">${formatNumber(row.expected)}</td>`,
-                Number.isFinite(gotValue)
-                    ? `<td class="got-cell has-hover-value"><span class="got-label">${escapeHtml(gotText)}</span><span class="got-number">${escapeHtml(gotNumericText)}</span></td>`
-                    : `<td class="got-cell">${escapeHtml(gotText)}</td>`,
-                `<td class="num">${formatSigned(row.delta)}</td>`,
-                `<td class="num">${formatNumber(row.deltaAbs)}</td>`,
-                `<td>${escapeHtml(row.pattern)}</td>`,
-                `<td>${escapeHtml(row._normalizedSubPattern || normalizeSubPattern(row.subPattern))}</td>`,
-                `<td class="band">${bandLabel}</td>`,
-                `<td class="compare-col">${escapeHtml(compareGotText)}</td>`,
-                `<td class="num compare-col">${formatNumber(row.compareDeltaAbs)}</td>`,
-                `<td class="winner ${winnerClass} compare-col">${escapeHtml(winnerLabel)}</td>`,
-                `<td class="actions-col"><div class="row-actions"><a class="icon-btn" href="${escapeHtml(searchUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t("index.table.actions.search", "Search beatmapsets"))}">🔎</a>${hasBid
-                    ? `<a class="icon-btn" href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t("index.table.actions.download", "Download .osu"))}">⬇</a>`
-                    : `<span class="icon-btn disabled" title="${escapeHtml(t("index.table.actions.noBid", "No bid"))}">⬇</span>`}</div></td>`,
-                "</tr>",
-            ].join("");
-        })
-        .join("");
+    renderMoreTableRows(TABLE_BATCH_SIZE);
+    ensureTableObserver();
 }
 
 export function updateSortVisual() {
@@ -396,7 +523,9 @@ export function updateSortVisual() {
     headers.forEach((head) => {
         const key = head.getAttribute("data-sort");
         const original = head.textContent.replace(/[\u2191\u2193]/g, "").trim();
-        if (key === state.sortKey) {
+        const isSorted = key === state.sortKey;
+        head.classList.toggle("is-sorted", isSorted);
+        if (isSorted) {
             head.textContent = `${original} ${state.sortDirection === "asc" ? "\u2191" : "\u2193"}`;
         } else {
             head.textContent = original;

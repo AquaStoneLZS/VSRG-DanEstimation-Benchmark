@@ -114,7 +114,9 @@
         },
         "scatter": {
           "title": "期望/预测散点图",
-          "subtitle": "带对角线参考的散点图"
+          "subtitle": "带对角线参考的散点图",
+          "overlappedTitle": "重叠谱面：共 {count} 张",
+          "moreOverlapped": "... 还有 {count} 张谱面（点击散点可筛选列表查看全部）"
         },
         "trend": {
           "title": "期望/预测趋势",
@@ -160,6 +162,8 @@
         "noData": "尚未加载数据。",
         "meta": "显示 {shownValid} / {shownTotal} | 当前范围总数={scopeTotal} | 错误数={errorCount}",
         "empty": "当前筛选条件下无匹配谱面。",
+        "lazyLoadAll": "已加载全部 {total} 张谱面",
+        "lazyLoadMore": "向下滚动加载更多 ({rendered} / {total})...",
         "columns": {
           "name": "名称",
           "expected": "期望",
