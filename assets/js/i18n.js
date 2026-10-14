@@ -379,25 +379,56 @@ function populateLanguageSelect(selectEl) {
     selectEl.value = i18nState.activeLanguage;
 }
 
+function renderLanguageOptionButtons(menu, select) {
+    let list = menu.querySelector(".lang-list");
+    if (!list) {
+        list = document.createElement("div");
+        list.className = "lang-list";
+        menu.appendChild(list);
+    }
+    list.innerHTML = "";
+    for (const entry of i18nState.languages) {
+        const itemBtn = document.createElement("button");
+        itemBtn.type = "button";
+        itemBtn.className = `lang-item-btn${entry.code === i18nState.activeLanguage ? " active" : ""}`;
+        itemBtn.textContent = entry.name;
+        itemBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (select) {
+                select.value = entry.code;
+            }
+            applyLanguage(entry.code, { persist: true, notify: true });
+            menu.classList.add("hidden");
+            renderLanguageOptionButtons(menu, select);
+        });
+        list.appendChild(itemBtn);
+    }
+}
+
 function setupLanguageSwitcher() {
     const button = document.getElementById("langFloatButton");
     const menu = document.getElementById("langMenu");
     const select = document.getElementById("langSelect");
 
-    if (!button || !menu || !select) {
+    if (!button || !menu) {
         return;
     }
 
-    populateLanguageSelect(select);
+    if (select) {
+        populateLanguageSelect(select);
+        select.addEventListener("change", () => {
+            applyLanguage(select.value, { persist: true, notify: true });
+            menu.classList.add("hidden");
+            renderLanguageOptionButtons(menu, select);
+        });
+    }
+
+    renderLanguageOptionButtons(menu, select);
 
     button.addEventListener("click", (event) => {
         event.stopPropagation();
         menu.classList.toggle("hidden");
-    });
-
-    select.addEventListener("change", () => {
-        applyLanguage(select.value, { persist: true, notify: true });
-        menu.classList.add("hidden");
+        renderLanguageOptionButtons(menu, select);
     });
 
     document.addEventListener("click", (event) => {

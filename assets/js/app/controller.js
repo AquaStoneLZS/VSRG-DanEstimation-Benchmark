@@ -147,6 +147,9 @@ function applyEmptyDashboard() {
         activeFilters: getActiveFilters(dom),
         fullSummary: emptySummary,
     });
+    document.querySelectorAll(".band-card").forEach((card) => {
+        card.classList.remove("is-active");
+    });
     dom.tableMeta.textContent = t("index.table.noData", "No Data Loaded.");
 }
 
@@ -201,6 +204,12 @@ function applyFiltersAndRender() {
             errorCount: state.errorRows.length,
         },
     );
+
+    const activeBand = dom.bandFilter ? dom.bandFilter.value : "all";
+    document.querySelectorAll(".band-card").forEach((card) => {
+        const bandType = ["exact", "close", "moderate", "miss"].find((type) => card.classList.contains(type));
+        card.classList.toggle("is-active", bandType === activeBand);
+    });
 
     if (state.currentAlgorithm) {
         setReadyDatasetInfo(activeSummary, state.errorRows.length);
@@ -318,6 +327,30 @@ function bindEvents() {
         onSubPatternSelect: (subPatternName) => {
             toggleSelectFilter(dom.subPatternFilter, subPatternName);
         },
+        onScatterSelect: (expectedValue) => {
+            if (expectedValue === undefined || expectedValue === null) {
+                return;
+            }
+            const valStr = String(expectedValue);
+            if (dom.expectedMinFilter.value === valStr && dom.expectedMaxFilter.value === valStr) {
+                dom.expectedMinFilter.value = "";
+                dom.expectedMaxFilter.value = "";
+            } else {
+                dom.expectedMinFilter.value = valStr;
+                dom.expectedMaxFilter.value = valStr;
+                dom.resultTable?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            applyFiltersAndRender();
+        },
+    });
+
+    document.querySelectorAll(".band-card").forEach((card) => {
+        const bandType = ["exact", "close", "moderate", "miss"].find((type) => card.classList.contains(type));
+        if (bandType) {
+            card.addEventListener("click", () => {
+                toggleSelectFilter(dom.bandFilter, bandType);
+            });
+        }
     });
 
     dom.algorithmSelect.addEventListener("change", async () => {

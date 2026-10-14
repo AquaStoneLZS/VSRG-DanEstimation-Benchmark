@@ -114,7 +114,9 @@
         },
         "scatter": {
           "title": "Expected vs Got",
-          "subtitle": "Scatter with diagonal reference"
+          "subtitle": "Scatter with diagonal reference",
+          "overlappedTitle": "{count} maps overlapped",
+          "moreOverlapped": "... and {count} more maps (click point to view all in table)"
         },
         "trend": {
           "title": "Expected/Got Trend",

@@ -34,6 +34,10 @@ export function setCompareUiVisible(visible) {
         cell.classList.toggle("hidden", !visible);
     });
 
+    if (dom.resultTable) {
+        dom.resultTable.classList.toggle("has-compare", visible);
+    }
+
     if (!visible && ["compareGot", "compareDeltaAbs", "better"].includes(state.sortKey)) {
         state.sortKey = "deltaAbs";
         state.sortDirection = "asc";
@@ -519,7 +523,9 @@ export function updateSortVisual() {
     headers.forEach((head) => {
         const key = head.getAttribute("data-sort");
         const original = head.textContent.replace(/[\u2191\u2193]/g, "").trim();
-        if (key === state.sortKey) {
+        const isSorted = key === state.sortKey;
+        head.classList.toggle("is-sorted", isSorted);
+        if (isSorted) {
             head.textContent = `${original} ${state.sortDirection === "asc" ? "\u2191" : "\u2193"}`;
         } else {
             head.textContent = original;
