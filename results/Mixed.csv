@@ -150,18 +150,18 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 ,Ephemera,tech,Unsigned,4,3.59,0.41,0.41
 ,Shannon's Theorem,tech,stream tech,4,3.91,0.09,0.09
 ,CrossOver,jack,Unsigned,4,3.12,0.88,0.88
-,Kirlian Shores,tech,Unsigned,3,2.41,0.59,0.59
+,Kirlian Shores,tech,Unsigned,3,2.31,0.69,0.69
 ,True Blue,stamina,Unsigned,3,3.18,-0.18,0.18
 ,Entelechia,speed,mid stream,3,3.00,0.00,0.00
-,Dimension Trippere!!!!,jack,Unsigned,3,2.63,0.37,0.37
-,Vermillion,tech,Unsigned,2,2.17,-0.17,0.17
+,Dimension Trippere!!!!,jack,Unsigned,3,2.53,0.47,0.47
+,Vermillion,tech,Unsigned,2,2.07,-0.07,0.07
 ,Eternal Drain,stamina,Unsigned,2,2.64,-0.64,0.64
-,Snow Storm,speed,Unsigned,2,2.63,-0.63,0.63
-,Flashes,jack,Unsigned,2,2.64,-0.64,0.64
-,Want U 2,tech,Unsigned,1,1.80,-0.80,0.80
-,Tommorow Perfume,stamina,Unsigned,1,2.54,-1.54,1.54
-,Shelter,speed,Unsigned,1,1.61,-0.61,0.61
-,Miracle Chance,jack,Unsigned,1,1.81,-0.81,0.81
+,Snow Storm,speed,Unsigned,2,2.53,-0.53,0.53
+,Flashes,jack,Unsigned,2,2.54,-0.54,0.54
+,Want U 2,tech,Unsigned,1,1.71,-0.71,0.71
+,Tommorow Perfume,stamina,Unsigned,1,2.44,-1.44,1.44
+,Shelter,speed,Unsigned,1,1.52,-0.52,0.52
+,Miracle Chance,jack,Unsigned,1,1.72,-0.72,0.72
 3079544,Night Club Junkie x0.95,speed,low stream,14.6,14.67,-0.07,0.07
 3079545,Night Club Junkie,speed,low stream,15,15.12,-0.12,0.12
 3933034,kizuato x1.25,speed,staircase,15.8,15.79,0.01,0.01
@@ -611,7 +611,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5167720,Bismuth[Nebula](eclipse),tech,stream tech,11.4,11.58,-0.18,0.18
 3444323,Nostos2021(xingren),tech,stream tech,17,16.84,0.16,0.16
 4130341,Re Aoharu(11bit),tech,stream tech,13.2,13.20,0.00,0.00
-,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 1st ~ (Marathon)],course,rc course,1,2.56,-1.56,1.56
+,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 1st ~ (Marathon)],course,rc course,1,2.46,-1.46,1.46
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 2nd ~ (Marathon)],course,rc course,2,2.74,-0.74,0.74
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 3rd ~ (Marathon)],course,rc course,3,3.05,-0.05,0.05
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 4th ~ (Marathon)],course,rc course,4,4.73,-0.73,0.73
@@ -645,7 +645,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5370092,Dan - Signicial's Courses[[4K] Extra Stage I - Zeta [16th Dan] (Marathon)],course,rc course,16.1,16.11,-0.01,0.01
 5597992,Dan - Signicial's Courses[[4K] Extra Stage II - Eta [17th Dan] (Marathon)],course,rc course,17.1,17.04,0.06,0.06
 5680925,Dan - Signicial's Courses[[4K] Extra Stage III - Theta [18th Dan] (Marathon)],course,rc course,17.9,18.07,-0.17,0.17
-5695357,Reincarnation(signicial dan),jack,low chordjack,2.9,2.40,0.50,0.50
+5695357,Reincarnation(signicial dan),jack,low chordjack,2.9,2.30,0.60,0.60
 5695347,Backyun! - BAD GIRL -(signicial dan),jack,low chordjack,3.7,3.80,-0.10,0.10
 5695360,air's gravity(signicial dan),jack,low chordjack,4.8,4.60,0.20,0.20
 5695358,Another Medium(signicial dan),jack,low chordjack,5.6,4.98,0.62,0.62
@@ -689,7 +689,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5366864,Tojita Sekai(signicial dan),speed,low stream,13.9,14.06,-0.16,0.16
 5590321,Nevereverland(signicial dan) x1.05,speed,mid stream,14.5,14.80,-0.30,0.30
 5366865,Disconnected Trance(signicial dan) x1.05,speed,mid stream,14.9,15.32,-0.42,0.42
-5375823,Kouyou(signicial dan),stamina,light jumpstream,3.1,3.00,0.10,0.10
+5375823,Kouyou(signicial dan),stamina,light jumpstream,3.1,2.90,0.20,0.20
 5375826,Ouka Sange(signicial dan),stamina,light handstream,4.7,5.40,-0.70,0.70
 5375824,Blue Moon(signicial dan),stamina,dense handstream,5.9,5.77,0.13,0.13
 5375829,Synthesis.(signicial dan),stamina,light handstream,6.4,6.71,-0.31,0.31
