@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-17T04:03:40.443Z",
+  "generatedAt": "2026-10-19T05:33:17.364Z",
   "algorithms": [
     "Azusa",
     "Companella",
     "Daniel",
     "DanOverlay",
     "Mixed",
+    "P1h",
     "Roxy",
-    "sky2002",
     "Sunny"
   ],
   "files": [
@@ -47,18 +47,18 @@
       "source": "https://github.com/LeoBlackMT/osumania_map_analyser"
     },
     {
+      "fileName": "P1h.csv",
+      "algorithm": "P1h",
+      "sizeBytes": 60331,
+      "modifiedAt": "2026-10-19T05:33:17.348Z",
+      "source": "https://github.com/sky2002/osu-star-web"
+    },
+    {
       "fileName": "Roxy.csv",
       "algorithm": "Roxy",
       "sizeBytes": 70074,
       "modifiedAt": "2026-10-11T04:24:43.254Z",
       "source": "https://github.com/LeoBlackMT/osumania_map_analyser/tree/main/docs/roxy_algorithm.md"
-    },
-    {
-      "fileName": "sky2002.csv",
-      "algorithm": "sky2002",
-      "sizeBytes": 60333,
-      "modifiedAt": "2026-10-17T04:03:40.426Z",
-      "source": "https://github.com/sky2002/osu-star-web"
     },
     {
       "fileName": "Sunny.csv",
