@@ -29,7 +29,7 @@ This project was migrated from the original project [ManiaMapAnalyzer](https://g
 - **[Companella](https://github.com/Leinadix/companella)** `v6.52` by Leinadix: 4K Dan estimation using an ONNX model based on [Etterna](https://github.com/etternagame/etterna) MinaCalc.
 - **[Mixed](https://github.com/LeoBlackMT/osumania_map_analyser)** `v2.1.0` by LeoBlackMT: a hybrid algorithm combining the algorithms above, automatically routing to the best algorithm based on beatmap characteristics. Mainly used in the [ManiaMapAnalyzer](https://github.com/LeoBlackMT/osumania_map_analyser) project.
 - **[DanOverlay](https://github.com/acarranzao1a-png/Dan-Overlay/)** `v3.1.0` by acarranzao1a-png: an algorithm calibrated and corrected on top of Sunny, Etterna MinaCalc and other algorithms. Supports 4K RC/LN and 7K, and the Reform/Celestial/Signicial/Shoegazer Dan systems.
-- **[sky2002](https://github.com/sky2002/osu-star-web)** `v1.0 (P1h)` by sky2002: a 4K difficulty and Dan estimator combining action-level Transformer, Student-t timing error probability integration, and a 22-feature HistGBDT tree calibration. RC maps to REFORM Dan, LN maps to LN Dan Courses v2.
+- **[P1h](https://github.com/sky2002/osu-star-web)** `v1.0 (P1h)` by sky2002: a 4K difficulty and Dan estimator combining action-level Transformer, Student-t timing error probability integration, and a 22-feature HistGBDT tree calibration. RC maps to REFORM Dan, LN maps to LN Dan Courses v2.
 
 ## Benchmark Results
 

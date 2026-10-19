@@ -149,19 +149,19 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 ,Angel Of Darkness,stamina,light jumpstream,4.2,4.24,-0.04,0.04
 ,Ephemera,tech,Unsigned,4,4.28,-0.28,0.28
 ,Shannon's Theorem,tech,stream tech,4,4.54,-0.54,0.54
-,CrossOver,jack,Unsigned,4,3.80,0.20,0.20
-,Kirlian Shores,tech,Unsigned,3,0.60,2.40,2.40
-,True Blue,stamina,Unsigned,3,2.93,0.07,0.07
-,Entelechia,speed,mid stream,3,2.65,0.35,0.35
-,Dimension Trippere!!!!,jack,Unsigned,3,-0.37,3.37,3.37
-,Vermillion,tech,Unsigned,2,2.35,-0.35,0.35
-,Eternal Drain,stamina,Unsigned,2,2.52,-0.52,0.52
-,Snow Storm,speed,Unsigned,2,1.50,0.50,0.50
-,Flashes,jack,Unsigned,2,2.83,-0.83,0.83
-,Want U 2,tech,Unsigned,1,0.71,0.29,0.29
-,Tommorow Perfume,stamina,Unsigned,1,1.28,-0.28,0.28
-,Shelter,speed,Unsigned,1,0.52,0.48,0.48
-,Miracle Chance,jack,Unsigned,1,-1.03,2.03,2.03
+,CrossOver,jack,Unsigned,4,3.82,0.18,0.18
+,Kirlian Shores,tech,Unsigned,3,0.72,2.28,2.28
+,True Blue,stamina,Unsigned,3,3.07,-0.07,0.07
+,Entelechia,speed,mid stream,3,2.45,0.55,0.55
+,Dimension Trippere!!!!,jack,Unsigned,3,0.06,2.94,2.94
+,Vermillion,tech,Unsigned,2,1.93,0.07,0.07
+,Eternal Drain,stamina,Unsigned,2,2.09,-0.09,0.09
+,Snow Storm,speed,Unsigned,2,1.34,0.66,0.66
+,Flashes,jack,Unsigned,2,2.96,-0.96,0.96
+,Want U 2,tech,Unsigned,1,0.80,0.20,0.20
+,Tommorow Perfume,stamina,Unsigned,1,1.19,-0.19,0.19
+,Shelter,speed,Unsigned,1,0.67,0.33,0.33
+,Miracle Chance,jack,Unsigned,1,-0.40,1.40,1.40
 3079544,Night Club Junkie x0.95,speed,low stream,14.6,14.05,0.55,0.55
 3079545,Night Club Junkie,speed,low stream,15,14.35,0.65,0.65
 3933034,kizuato x1.25,speed,staircase,15.8,15.14,0.66,0.66
@@ -493,7 +493,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 3476974,Don't let you down(rg8v3),jack,high chordjack,7.9,6.82,1.08,1.08
 3476968,Kikai Shoujo Gensou(rg9v3),jack,high chordjack,8.5,8.15,0.35,0.35
 3824604,Hifumi Daisuki[Hard](Magikarp1234),jack,high chordjack,13.6,12.13,1.47,1.47
-4010826,Re Aoharu(magikarp),jack,high chordjack,4.8,2.98,1.82,1.82
+4010826,Re Aoharu(magikarp),jack,high chordjack,4.8,3.11,1.69,1.69
 4388484,hurricanic(stupud man),speed,high stream,14,14.04,-0.04,0.04
 3171267,hurricanic(stupud man) x1.05,speed,high stream,14.4,14.28,0.12,0.12
 4388482,hurricanic(stupud man) x1.1,speed,high stream,15,14.63,0.37,0.37
@@ -543,7 +543,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 1887431,Aquaris(snover) x1.2,jack,low chordjack,13,12.22,0.78,0.78
 1426702,Double Universe(hydria),jack,low chordjack,14,13.36,0.64,0.64
 3476969,Koi Kou Enishi(rg3v3),jack,low chordjack,3.6,4.08,-0.48,0.48
-3476970,Umiyuri Kaiteitan(rg4v3),jack,low chordjack,4.1,2.78,1.32,1.32
+3476970,Umiyuri Kaiteitan(rg4v3),jack,low chordjack,4.1,2.80,1.30,1.30
 3476971,Platinum Disco(rg5v3),jack,low chordjack,5,3.98,1.02,1.02
 3476972,Chocolate Disco(rg6v3),jack,low chordjack,5.8,4.47,1.33,1.33
 3928690,Reflec Streamz(gamma) x1.15,speed,low stream,14.6,14.52,0.08,0.08
@@ -612,8 +612,8 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 3444323,Nostos2021(xingren),tech,stream tech,17,15.49,1.51,1.51
 4130341,Re Aoharu(11bit),tech,stream tech,13.2,12.23,0.97,0.97
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 1st ~ (Marathon)],course,rc course,1,1.00,0.00,0.00
-,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 2nd ~ (Marathon)],course,rc course,2,2.46,-0.46,0.46
-,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 3rd ~ (Marathon)],course,rc course,3,2.52,0.48,0.48
+,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 2nd ~ (Marathon)],course,rc course,2,2.00,0.00,0.00
+,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 3rd ~ (Marathon)],course,rc course,3,2.09,0.91,0.91
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 4th ~ (Marathon)],course,rc course,4,4.00,0.00,0.00
 ,Various Artists - Dan ~ REFORM ~ 1st Pack (Thaumiel) [~ 5th ~ (Marathon)],course,rc course,5,5.00,0.00,0.00
 ,Various Artists - Dan ~ REFORM ~ 2nd Pack (Thaumiel) [~ 6th ~ (Marathon)],course,rc course,6,6.19,-0.19,0.19
@@ -627,7 +627,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 ,Various Artists - Dan ~ REFORM ~ 2nd Pack (Thaumiel) [~ EXTRA-DELTA ~ (Marathon)],course,rc course,14,14.00,0.00,0.00
 ,Various Artists - Dan ~ REFORM ~ 2nd Pack (Thaumiel) [~ EXTRA-EPSILON ~ (Marathon)],course,rc course,15,15.00,0.00,0.00
 ,Various Artists - Dan ~ REFORM ~ FINAL ([GB]Thaumiel) [~ FINAL - ETA ~ ( Marathon )],course,rc course,17,17.00,0.00,0.00
-5319863,Dan - Signicial's Courses[[4K] Stage III - Termination [3rd Dan] (Marathon)],course,rc course,3.1,2.92,0.18,0.18
+5319863,Dan - Signicial's Courses[[4K] Stage III - Termination [3rd Dan] (Marathon)],course,rc course,3.1,3.06,0.04,0.04
 5319952,Dan - Signicial's Courses[[4K] Stage IV - Resuscitation [4th Dan] (Marathon)],course,rc course,3.7,4.08,-0.38,0.38
 5031832,Dan - Signicial's Courses[[4K] Stage V - Disturbance [5th Dan] (Marathon)],course,rc course,4.6,4.66,-0.06,0.06
 5031833,Dan - Signicial's Courses[[4K] Stage VI - Revitalization [6th Dan] (Marathon)],course,rc course,5.6,5.01,0.59,0.59
@@ -645,8 +645,8 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5370092,Dan - Signicial's Courses[[4K] Extra Stage I - Zeta [16th Dan] (Marathon)],course,rc course,16.1,15.10,1.00,1.00
 5597992,Dan - Signicial's Courses[[4K] Extra Stage II - Eta [17th Dan] (Marathon)],course,rc course,17.1,16.25,0.85,0.85
 5680925,Dan - Signicial's Courses[[4K] Extra Stage III - Theta [18th Dan] (Marathon)],course,rc course,17.9,16.39,1.51,1.51
-5695357,Reincarnation(signicial dan),jack,low chordjack,2.9,1.61,1.29,1.29
-5695347,Backyun! - BAD GIRL -(signicial dan),jack,low chordjack,3.7,3.86,-0.16,0.16
+5695357,Reincarnation(signicial dan),jack,low chordjack,2.9,1.42,1.48,1.48
+5695347,Backyun! - BAD GIRL -(signicial dan),jack,low chordjack,3.7,3.88,-0.18,0.18
 5695360,air's gravity(signicial dan),jack,low chordjack,4.8,4.30,0.50,0.50
 5695358,Another Medium(signicial dan),jack,low chordjack,5.6,4.26,1.34,1.34
 5695355,Saltwater Chicken & Duck Roasted Chicken & Duck(signicial dan),jack,low chordjack,6.6,6.16,0.44,0.44
@@ -660,8 +660,8 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5695350,Nijiiro Kekkai Gekkyou no Goku(signicial dan),jack,anchor chordjack,13.6,12.26,1.34,1.34
 5590317,Nijuu(signicial dan),jack,anchor chordjack,14.5,12.86,1.64,1.64
 5695352,Ragnarok(signicial dan) x0.9,jack,high chordjack,16.1,15.47,0.63,0.63
-5370048,Ambitious(signicial dan),tech,stream tech,3.3,1.85,1.45,1.45
-5370044,for Q(signicial dan),tech,stream tech,3.7,3.81,-0.11,0.11
+5370048,Ambitious(signicial dan),tech,stream tech,3.3,1.58,1.72,1.72
+5370044,for Q(signicial dan),tech,stream tech,3.7,3.84,-0.14,0.14
 5370045,kibou no tsuki(signicial dan),tech,jack tech,4.5,4.02,0.48,0.48
 5370043,BIRTH(signicial dan),tech,stream tech,5.7,5.10,0.60,0.60
 5370047,girls.exe(signicial dan),tech,stream tech,6.4,6.12,0.28,0.28
@@ -674,7 +674,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5590318,sirens eye(signicial dan),tech,stream tech,14.4,14.02,0.38,0.38
 5370038,POLYBIUS GB SPEEDRUN(signicial dan) x1.2,tech,stream tech,14.8,14.34,0.46,0.46
 5370037,NUCLEAR-STAR(signicial dan),tech,stream tech,16.2,15.69,0.51,0.51
-5366872,Phi(signicial dan),speed,low stream,3.1,3.35,-0.25,0.25
+5366872,Phi(signicial dan),speed,low stream,3.1,3.43,-0.33,0.33
 5375029,498 Tokio(signicial dan),speed,low stream,3.8,4.54,-0.74,0.74
 5366871,The Wanderlast(signicial dan),speed,low stream,4.4,4.74,-0.34,0.34
 5366875,BREAK IT(signicial dan),speed,mid stream,5.8,5.13,0.67,0.67
@@ -689,7 +689,7 @@ bid,name,pattern,subPattern,expected,got,delta,deltaAbs
 5366864,Tojita Sekai(signicial dan),speed,low stream,13.9,14.33,-0.43,0.43
 5590321,Nevereverland(signicial dan) x1.05,speed,mid stream,14.5,14.68,-0.18,0.18
 5366865,Disconnected Trance(signicial dan) x1.05,speed,mid stream,14.9,14.54,0.36,0.36
-5375823,Kouyou(signicial dan),stamina,light jumpstream,3.1,2.90,0.20,0.20
+5375823,Kouyou(signicial dan),stamina,light jumpstream,3.1,3.04,0.06,0.06
 5375826,Ouka Sange(signicial dan),stamina,light handstream,4.7,4.36,0.34,0.34
 5375824,Blue Moon(signicial dan),stamina,dense handstream,5.9,5.73,0.17,0.17
 5375829,Synthesis.(signicial dan),stamina,light handstream,6.4,6.25,0.15,0.15

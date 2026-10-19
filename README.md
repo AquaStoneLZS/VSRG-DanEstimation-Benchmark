@@ -27,7 +27,7 @@
 - **[Companella](https://github.com/Leinadix/companella)** `v6.52` by Leinadix：使用 onnx 模型基于 [Etterna](https://github.com/etternagame/etterna) MinaCalc 的 4K 段位估算。
 - **[Mixed](https://github.com/LeoBlackMT/osumania_map_analyser)** `v2.1.0` by LeoBlackMT：综合上方算法的混合算法，自动根据谱面特征路由至最佳算法。主要应用于[ManiaMapAnalyzer](https://github.com/LeoBlackMT/osumania_map_analyser)项目中
 - **[DanOverlay](https://github.com/acarranzao1a-png/Dan-Overlay/)** `v3.1.0` by acarranzao1a-png：基于 Sunny、Etterna MinaCalc 等算法，进行校准和修正后的算法。支持4K RC/LN和7K，支持段位体系 Reform/Celestial/Signicial/Shoegazer。
-- **[sky2002](https://github.com/sky2002/osu-star-web)** `v1.0 (P1h)` by sky2002：基于动作级微型 Transformer + Student-t 击打误差概率积分 + 22 项宏观特征 HistGBDT 树校准的 4K 难度与段位估计器。RC 对应 REFORM 米段位，LN 对应 LN Dan Courses v2 面段位。
+- **[P1h](https://github.com/sky2002/osu-star-web)** `v1.0 (P1h)` by sky2002：基于动作级微型 Transformer + Student-t 击打误差概率积分 + 22 项宏观特征 HistGBDT 树校准的 4K 难度与段位估计器。RC 对应 REFORM 米段位，LN 对应 LN Dan Courses v2 面段位。
 
 ## Benchmark 结果
 
